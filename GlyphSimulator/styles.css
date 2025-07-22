@@ -1,0 +1,539 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #000000;
+    color: #ffffff;
+    min-height: 100vh;
+    font-weight: 400;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+header h1::before {
+    content: "● ";
+    color: #ff6b6b;
+    font-size: 0.8em;
+}
+
+header p {
+    color: #666666;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.simulator-panel {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.2s ease;
+}
+
+.simulator-panel:hover {
+    border-color: #444444;
+}
+
+.phone-outline {
+    background: #000000;
+    border: 2px solid #333333;
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.glyph-matrix {
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    grid-template-rows: repeat(25, 1fr);
+    gap: 1px;
+    background: #000000;
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    aspect-ratio: 1;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 400px;
+    border: 1px solid #222222;
+}
+
+.led {
+    background: #0a0a0a;
+    border-radius: 1px;
+    transition: all 0.15s ease;
+    border: none;
+    width: 100%;
+    height: 100%;
+    min-height: 12px;
+    min-width: 12px;
+}
+
+.led.active {
+    box-shadow: none;
+    border: none;
+}
+
+.glyph-button {
+    background: #111111;
+    border: 2px solid #333333;
+    border-radius: 40px;
+    padding: 16px 32px;
+    text-align: center;
+    user-select: none;
+    transition: all 0.15s ease;
+    position: relative;
+    max-width: 200px;
+    margin: 0 auto;
+    pointer-events: none;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+}
+
+.glyph-button.pressed {
+    background: #222222;
+    border-color: #666666;
+    transform: translateY(1px);
+}
+
+.button-indicator {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #333333;
+    transition: all 0.15s ease;
+}
+
+.button-indicator.active {
+    background: #ff6b6b;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.button-controls h3,
+.matrix-info h3 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+}
+
+.button-controls h3::before {
+    content: "● ";
+    color: #ff6b6b;
+    font-size: 0.8em;
+}
+
+.matrix-info h3::before {
+    content: "● ";
+    color: #ff6b6b;
+    font-size: 0.8em;
+}
+
+.control-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 12px;
+    transition: all 0.15s ease;
+    width: 100%;
+    font-size: 14px;
+    letter-spacing: 0.005em;
+}
+
+.control-btn:hover {
+    background: #222222;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+.touch-btn {
+    background: #111111;
+    border: 1px solid #333333;
+}
+
+.touch-btn:hover {
+    background: #222222;
+    border-color: #555555;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #222222;
+    font-size: 14px;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.code-panel {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: all 0.2s ease;
+}
+
+.code-panel:hover {
+    border-color: #444444;
+}
+
+.api-section h3,
+.console-section h3 {
+    color: #ffffff;
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+}
+
+.api-section h3::before {
+    content: "● ";
+    color: #ff6b6b;
+    font-size: 0.8em;
+}
+
+.console-section h3::before {
+    content: "● ";
+    color: #ff6b6b;
+    font-size: 0.8em;
+}
+
+#codeEditor {
+    background: #000000;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 16px;
+    color: #ffffff;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 280px;
+    width: 100%;
+    transition: all 0.15s ease;
+}
+
+#codeEditor:focus {
+    outline: none;
+    border-color: #666666;
+    background: #0a0a0a;
+}
+
+.code-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.run-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    font-size: 14px;
+}
+
+.run-btn:hover {
+    background: #222222;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+.stop-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    font-size: 14px;
+}
+
+.stop-btn:hover {
+    background: #222222;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+.clear-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    font-size: 14px;
+}
+
+.clear-btn:hover {
+    background: #222222;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+.example-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    font-size: 14px;
+}
+
+.example-btn:hover {
+    background: #222222;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+.test-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    font-size: 14px;
+}
+
+.test-btn:hover {
+    background: #222222;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+.console-output {
+    background: #000000;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    height: 200px;
+    overflow-y: auto;
+    color: #cccccc;
+}
+
+.clear-console-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    padding: 8px 16px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 12px;
+    align-self: flex-start;
+    transition: all 0.15s ease;
+    font-weight: 500;
+}
+
+.clear-console-btn:hover {
+    background: #222222;
+    border-color: #555555;
+}
+
+.examples-panel {
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.2s ease;
+}
+
+.examples-panel:hover {
+    border-color: #444444;
+}
+
+.examples-panel h3 {
+    color: #ffffff;
+    margin-bottom: 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+}
+
+.examples-panel h3::before {
+    content: "● ";
+    color: #ff6b6b;
+    font-size: 0.8em;
+}
+
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.example-card {
+    background: #000000;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+    color: #ffffff;
+}
+
+.example-card:hover {
+    background: #111111;
+    border-color: #555555;
+    transform: translateY(-2px);
+}
+
+.example-card h4 {
+    color: #ffffff;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+}
+
+.example-card p {
+    color: #666666;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+footer {
+    text-align: center;
+    padding: 24px;
+    color: #666666;
+    border-top: 1px solid #222222;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.console-output .error {
+    color: #ff6b6b;
+}
+
+.console-output .warning {
+    color: #ffa726;
+}
+
+.console-output .info {
+    color: #66bb6a;
+}
+
+.console-output .success {
+    color: #4caf50;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .examples-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .simulator-panel,
+    .code-panel,
+    .examples-panel {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .code-controls {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .glyph-matrix {
+        max-width: 300px;
+        height: 300px;
+    }
+    
+    .simulator-panel,
+    .code-panel,
+    .examples-panel {
+        padding: 20px;
+    }
+}
