@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glyph Creation Tool - Nothing Phone 3</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 Glyph Creation Tool</h1>
+            <p>Design custom glyph patterns for Nothing Phone 3 - 25x25 Matrix</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="tool-section">
+                    <h3>🎨 Brush Tools</h3>
+                    <div class="control-group">
+                        <label for="brushType">Brush Type:</label>
+                        <select id="brushType">
+                            <option value="square">Square</option>
+                            <option value="circle">Circle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="brushSize">Brush Size:</label>
+                        <input type="range" id="brushSize" min="1" max="5" value="1">
+                        <span id="brushSizeValue">1</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="brightness">Brightness:</label>
+                        <input type="range" id="brightness" min="0" max="255" value="255">
+                        <span id="brightnessValue">255</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="drawMode">Mode:</label>
+                        <select id="drawMode">
+                            <option value="paint">Paint</option>
+                            <option value="erase">Erase</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tool-section">
+                    <h3>🔧 Tools</h3>
+                    <button id="clearCanvas" class="btn btn-danger">Clear All</button>
+                    <button id="fillCanvas" class="btn btn-secondary">Fill All</button>
+                    <button id="invertCanvas" class="btn btn-secondary">Invert</button>
+                </div>
+
+                <div class="tool-section">
+                    <h3>💾 Export</h3>
+                    <button id="exportJson" class="btn btn-primary">Export JSON</button>
+                    <button id="exportJava" class="btn btn-primary">Export Java Array</button>
+                    <button id="exportPng" class="btn btn-primary">Export PNG</button>
+                </div>
+
+                <div class="tool-section">
+                    <h3>📁 Import</h3>
+                    <input type="file" id="importFile" accept=".json,.png" style="display: none;">
+                    <button id="importBtn" class="btn btn-secondary">Import File</button>
+                </div>
+
+                <div class="tool-section">
+                    <h3>ℹ️ Info</h3>
+                    <div class="info-display">
+                        <p>Grid: 25x25 (625 pixels)</p>
+                        <p>Circular display area</p>
+                        <p>Corner pixels are inactive</p>
+                        <p id="activePixels">Active pixels: 0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Area -->
+            <div class="canvas-container">
+                <div class="canvas-wrapper">
+                    <canvas id="glyphCanvas" width="500" height="500"></canvas>
+                    <div class="canvas-overlay">
+                        <div class="circle-guide"></div>
+                    </div>
+                </div>
+                
+                <div class="canvas-info">
+                    <p>25x25 Glyph Matrix - Click and drag to paint</p>
+                    <p>Gray areas represent the circular display boundary, transparent areas represent the "imaginary" parts of the "square" display</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+            <h3>🔍 Preview</h3>
+            <canvas id="previewCanvas" width="200" height="200"></canvas>
+            <p>Simulated glyph appearance</p>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Export Data</h3>
+            <textarea id="exportData" rows="15" readonly></textarea>
+            <button id="copyToClipboard" class="btn btn-primary">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
