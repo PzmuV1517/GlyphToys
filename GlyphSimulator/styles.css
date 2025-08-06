@@ -102,6 +102,13 @@ header p {
     height: 100%;
     min-height: 12px;
     min-width: 12px;
+    cursor: default;
+    position: relative;
+}
+
+.led:hover {
+    transform: scale(1.1);
+    z-index: 10;
 }
 
 .led.active {
@@ -245,6 +252,21 @@ header p {
     content: "● ";
     color: #ff6b6b;
     font-size: 0.8em;
+}
+
+.code-notice {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border: 1px solid #444444;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.code-notice strong {
+    color: #ff6b6b;
 }
 
 .console-section h3::before {

@@ -72,7 +72,12 @@
             <div class="code-panel">
                 <div class="api-section">
                     <h3>Live API Test</h3>
-                    <textarea id="codeEditor" placeholder="// Write your Glyph Matrix code here...
+                    <div class="code-notice">
+                        <strong>💡 Language Notice:</strong> Write <strong>JavaScript</strong> code here that mimics the Java API. 
+                        The methods and structure match the official Nothing Phone SDK exactly, making it easy to transfer 
+                        your code to real Android development later.
+                    </div>
+                    <textarea id="codeEditor" placeholder="// Write your Glyph Matrix code here (JavaScript with Java-style API)...
 // Example:
 const manager = new GlyphMatrixManager();
 manager.init(() => console.log('Initialized'));
@@ -111,6 +116,14 @@ function createSimpleObject() {
         <div class="examples-panel">
             <h3>Quick Examples</h3>
             <div class="examples-grid">
+                <button class="example-card" onclick="loadOfficialExample()">
+                    <h4>Official API</h4>
+                    <p>Butterfly example</p>
+                </button>
+                <button class="example-card" onclick="loadBasicExample()">
+                    <h4>Basic Demo</h4>
+                    <p>Simple patterns</p>
+                </button>
                 <button class="example-card" onclick="loadPulseExample()">
                     <h4>Pulse Effect</h4>
                     <p>Breathing animation</p>
@@ -122,6 +135,10 @@ function createSimpleObject() {
                 <button class="example-card" onclick="loadTextExample()">
                     <h4>Text Display</h4>
                     <p>Show text on matrix</p>
+                </button>
+                <button class="example-card" onclick="loadBrightnessExample()">
+                    <h4>Brightness Test</h4>
+                    <p>Visual levels</p>
                 </button>
                 <button class="example-card" onclick="loadMultiLayerExample()">
                     <h4>Multi-Layer</h4>

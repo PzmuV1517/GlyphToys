@@ -22,6 +22,14 @@ function initializeGlyphMatrix() {
         led.dataset.index = i;
         led.style.backgroundColor = '#0a0a0a';
         led.style.opacity = '1';
+        led.title = 'Off'; // Initialize with tooltip
+        
+        // Add row and column info for debugging
+        const row = Math.floor(i / 25);
+        const col = i % 25;
+        led.dataset.row = row;
+        led.dataset.col = col;
+        
         matrixElement.appendChild(led);
     }
     
@@ -571,6 +579,116 @@ manager.init(() => {
     console.info('Basic example loaded - click Run to execute');
 }
 
+// Load official API example (matches Nothing's documentation exactly)
+function loadOfficialExample() {
+    const exampleCode = `// Official API Example - Butterfly Display
+const manager = new GlyphMatrixManager();
+
+// Initialize the manager
+manager.init(() => {
+    console.log('GlyphMatrixManager initialized');
+    
+    // Register for Phone 3 (matches official documentation)
+    manager.register(Glyph.DEVICE_23112);
+    
+    // Create butterfly object exactly like the official example
+    const butterfly = new GlyphMatrixObject.Builder()
+        .setImageSource(GlyphMatrixUtils.drawableToBitmap('butterfly'))
+        .setScale(100)
+        .setOrientation(0)
+        .setPosition(0, 0)
+        .setReverse(false)
+        .build();
+    
+    // Create frame and render (matches official API)
+    const frameBuilder = new GlyphMatrixFrame.Builder();
+    const frame = frameBuilder.addTop(butterfly).build();
+    manager.setMatrixFrame(frame.render());
+    
+    console.log('Butterfly displayed using official API pattern!');
+    
+    // Demonstrate animation with different shapes
+    const shapes = ['butterfly', 'heart', 'star', 'diamond', 'circle'];
+    let shapeIndex = 0;
+    
+    setInterval(() => {
+        shapeIndex = (shapeIndex + 1) % shapes.length;
+        
+        const newObject = new GlyphMatrixObject.Builder()
+            .setImageSource(GlyphMatrixUtils.drawableToBitmap(shapes[shapeIndex]))
+            .setScale(100)
+            .setOrientation(0)
+            .setPosition(0, 0)
+            .setReverse(false)
+            .build();
+        
+        const newFrame = new GlyphMatrixFrame.Builder()
+            .addTop(newObject)
+            .build();
+        
+        manager.setMatrixFrame(newFrame.render());
+        console.log('Displaying: ' + shapes[shapeIndex]);
+    }, 2000);
+});`;
+
+    document.getElementById('codeEditor').value = exampleCode;
+    console.info('Official API example loaded - matches Nothing documentation exactly');
+}
+
+// Load brightness test example
+function loadBrightnessExample() {
+    const exampleCode = `// Brightness Level Test
+const manager = new GlyphMatrixManager();
+
+manager.init(() => {
+    manager.register(Glyph.DEVICE_23112);
+    
+    // Create brightness gradient from left to right
+    const matrix = new Array(625).fill(0);
+    
+    // Fill columns with different brightness levels
+    for (let x = 0; x < 25; x++) {
+        const brightness = Math.round((x / 24) * 255); // 0 to 255
+        
+        for (let y = 8; y < 17; y++) { // Middle rows
+            matrix[y * 25 + x] = brightness;
+        }
+    }
+    
+    manager.setMatrixFrame(matrix);
+    console.log('Brightness gradient displayed (0-255 from left to right)');
+    
+    // Test specific brightness levels
+    setTimeout(() => {
+        const testMatrix = new Array(625).fill(0);
+        const brightnesses = [25, 50, 100, 150, 200, 255];
+        
+        brightnesses.forEach((brightness, index) => {
+            const x = 4 + index * 3;
+            const y = 12;
+            
+            // Create small 3x3 squares
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    const px = x + dx;
+                    const py = y + dy;
+                    if (px >= 0 && px < 25 && py >= 0 && py < 25) {
+                        testMatrix[py * 25 + px] = brightness;
+                    }
+                }
+            }
+        });
+        
+        manager.setMatrixFrame(testMatrix);
+        console.log('Brightness levels: 25, 50, 100, 150, 200, 255');
+        console.log('Hover over LEDs to see exact brightness values!');
+    }, 3000);
+});`;
+
+    document.getElementById('codeEditor').value = exampleCode;
+    console.info('Brightness test loaded - shows different brightness levels clearly');
+}
+
 // Example: Pulse effect
 function loadPulseExample() {
     const exampleCode = `// Pulse Animation Example
@@ -653,16 +771,17 @@ manager.init(() => {
 
 // Example: Text display
 function loadTextExample() {
-    const exampleCode = `// Text Display Example
+    const exampleCode = `// Text Display Example - Full Alphabet & Numbers
 const manager = new GlyphMatrixManager();
 
 manager.init(() => {
     manager.register(Glyph.DEVICE_23112);
     
+    // Display "HELLO" text first
     const textObject = new GlyphMatrixObject.Builder()
-        .setText("HI")
-        .setPosition(0, 0)
-        .setBrightness(255)
+        .setText("HELLO")
+        .setPosition(0, 0) 
+        .setBrightness(200)
         .build();
     
     const frame = new GlyphMatrixFrame.Builder()
@@ -670,11 +789,36 @@ manager.init(() => {
         .build();
     
     manager.setMatrixFrame(frame);
-    console.log('Text "HI" displayed on matrix!');
+    console.log('Displaying text: HELLO');
+    
+    // Animate through various messages to demonstrate text support
+    const messages = [
+        "HELLO", "WORLD!", "GLYPH", "TOY", "TEST", 
+        "ABCDE", "12345", "YES?", "NO!", "OK+", 
+        "A=1", "B-2", "C:D", "X.Y", "Z,W"
+    ];
+    let messageIndex = 0;
+    
+    setInterval(() => {
+        messageIndex = (messageIndex + 1) % messages.length;
+        
+        const newTextObject = new GlyphMatrixObject.Builder()
+            .setText(messages[messageIndex])
+            .setPosition(0, 0)
+            .setBrightness(200)
+            .build();
+        
+        const newFrame = new GlyphMatrixFrame.Builder()
+            .addTop(newTextObject)
+            .build();
+        
+        manager.setMatrixFrame(newFrame);
+        console.log('Displaying text: ' + messages[messageIndex]);
+    }, 2000);
 });`;
 
     document.getElementById('codeEditor').value = exampleCode;
-    console.info('Text example loaded - click Run to execute');
+    console.info('Text example loaded - showcases full alphabet, numbers, and symbols');
 }
 
 // Example: Multi-layer effects

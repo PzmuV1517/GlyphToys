@@ -29,10 +29,21 @@ let simulatorState = {
 // Utility class for matrix operations
 class GlyphMatrixUtils {
     static drawableToBitmap(drawable) {
-        // Simulate converting drawable to bitmap
-        // For web simulation, we'll create a simple pattern
+        // Simulate converting Android drawable to bitmap
+        // For web simulation, we'll create patterns based on drawable names
         if (typeof drawable === 'string') {
-            return this.createTextBitmap(drawable);
+            // Handle different drawable resource patterns
+            if (drawable.includes('text') || drawable.length < 10) {
+                return this.createTextBitmap(drawable);
+            }
+            // Extract pattern name from drawable path/name
+            const patternName = drawable.toLowerCase();
+            if (patternName.includes('butterfly')) return this.createSampleBitmap('butterfly');
+            if (patternName.includes('circle')) return this.createSampleBitmap('circle');
+            if (patternName.includes('cross')) return this.createSampleBitmap('cross');
+            if (patternName.includes('diamond')) return this.createSampleBitmap('diamond');
+            if (patternName.includes('heart')) return this.createSampleBitmap('heart');
+            if (patternName.includes('star')) return this.createSampleBitmap('star');
         }
         return this.createSampleBitmap();
     }
@@ -75,6 +86,89 @@ class GlyphMatrixUtils {
                     }
                 }
                 break;
+                
+            case 'butterfly':
+                // Create a butterfly pattern similar to the official example
+                const butterflyPattern = [
+                    [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0,1,1,1,1,0,0,0],
+                    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+                    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+                    [0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0],
+                    [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+                    [0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                ];
+                for (let y = 0; y < size; y++) {
+                    for (let x = 0; x < size; x++) {
+                        if (butterflyPattern[y][x]) {
+                            bitmap[y * size + x] = 255;
+                        }
+                    }
+                }
+                break;
+                
+            case 'heart':
+                // Create a heart pattern
+                for (let y = 0; y < size; y++) {
+                    for (let x = 0; x < size; x++) {
+                        // Heart equation
+                        const nx = (x - 12) / 8;
+                        const ny = (y - 8) / 8;
+                        const heartEq = Math.pow(nx*nx + ny*ny - 1, 3) - nx*nx*ny*ny*ny;
+                        if (heartEq <= 0 && y >= 8) {
+                            bitmap[y * size + x] = 255;
+                        }
+                    }
+                }
+                break;
+                
+            case 'star':
+                // Create a star pattern
+                const centerS = 12;
+                const outerRadius = 10;
+                const innerRadius = 5;
+                for (let i = 0; i < 10; i++) {
+                    const angle = (i * Math.PI) / 5;
+                    const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                    const x = Math.round(centerS + radius * Math.cos(angle));
+                    const y = Math.round(centerS + radius * Math.sin(angle));
+                    
+                    // Draw lines between star points
+                    const nextI = (i + 1) % 10;
+                    const nextAngle = (nextI * Math.PI) / 5;
+                    const nextRadius = nextI % 2 === 0 ? outerRadius : innerRadius;
+                    const nextX = Math.round(centerS + nextRadius * Math.cos(nextAngle));
+                    const nextY = Math.round(centerS + nextRadius * Math.sin(nextAngle));
+                    
+                    // Simple line drawing
+                    const steps = Math.max(Math.abs(nextX - x), Math.abs(nextY - y));
+                    for (let step = 0; step <= steps; step++) {
+                        const lx = Math.round(x + (nextX - x) * step / steps);
+                        const ly = Math.round(y + (nextY - y) * step / steps);
+                        if (lx >= 0 && lx < size && ly >= 0 && ly < size) {
+                            bitmap[ly * size + lx] = 255;
+                        }
+                    }
+                }
+                break;
         }
         
         return bitmap;
@@ -87,7 +181,7 @@ class GlyphMatrixUtils {
         const size = 25;
         const bitmap = new Array(size * size).fill(0);
         
-        // Simple font patterns for basic characters
+        // Complete font patterns for all common characters
         const fontPatterns = {
             'A': [
                 [0,1,1,1,0],
@@ -107,7 +201,314 @@ class GlyphMatrixUtils {
                 [1,1,1,1,0],
                 [0,0,0,0,0]
             ],
-            // Add more characters as needed
+            'C': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            'D': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            'E': [
+                [1,1,1,1,1],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0]
+            ],
+            'F': [
+                [1,1,1,1,1],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [0,0,0,0,0]
+            ],
+            'G': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,0],
+                [1,0,1,1,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            'H': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ],
+            'I': [
+                [1,1,1,1,1],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0]
+            ],
+            'J': [
+                [1,1,1,1,1],
+                [0,0,0,1,0],
+                [0,0,0,1,0],
+                [0,0,0,1,0],
+                [1,0,0,1,0],
+                [0,1,1,0,0],
+                [0,0,0,0,0]
+            ],
+            'K': [
+                [1,0,0,0,1],
+                [1,0,0,1,0],
+                [1,0,1,0,0],
+                [1,1,0,0,0],
+                [1,0,1,0,0],
+                [1,0,0,1,0],
+                [0,0,0,0,0]
+            ],
+            'L': [
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0]
+            ],
+            'M': [
+                [1,0,0,0,1],
+                [1,1,0,1,1],
+                [1,0,1,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ],
+            'N': [
+                [1,0,0,0,1],
+                [1,1,0,0,1],
+                [1,0,1,0,1],
+                [1,0,0,1,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ],
+            'O': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            'P': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [0,0,0,0,0]
+            ],
+            'Q': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,1,0,1],
+                [1,0,0,1,0],
+                [0,1,1,0,1],
+                [0,0,0,0,0]
+            ],
+            'R': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,1,1,1,0],
+                [1,0,1,0,0],
+                [1,0,0,1,0],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ],
+            'S': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,1,0,0,0],
+                [0,0,0,1,0],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            'T': [
+                [1,1,1,1,1],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            'U': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            'V': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,0,1,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            'W': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,1,0,1],
+                [1,1,0,1,1],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ],
+            'X': [
+                [1,0,0,0,1],
+                [0,1,0,1,0],
+                [0,0,1,0,0],
+                [0,1,0,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ],
+            'Y': [
+                [1,0,0,0,1],
+                [0,1,0,1,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            'Z': [
+                [1,1,1,1,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0]
+            ],
+            // Numbers
+            '0': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,1,1],
+                [1,0,1,0,1],
+                [1,1,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            '1': [
+                [0,0,1,0,0],
+                [0,1,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0]
+            ],
+            '2': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0]
+            ],
+            '3': [
+                [1,1,1,1,0],
+                [0,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,1],
+                [0,0,0,0,1],
+                [1,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            '4': [
+                [1,0,0,1,0],
+                [1,0,0,1,0],
+                [1,0,0,1,0],
+                [1,1,1,1,1],
+                [0,0,0,1,0],
+                [0,0,0,1,0],
+                [0,0,0,0,0]
+            ],
+            '5': [
+                [1,1,1,1,1],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [0,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            '6': [
+                [0,1,1,1,0],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            '7': [
+                [1,1,1,1,1],
+                [0,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0],
+                [0,1,0,0,0],
+                [0,0,0,0,0]
+            ],
+            '8': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            '9': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,1],
+                [0,0,0,0,1],
+                [0,1,1,1,0],
+                [0,0,0,0,0]
+            ],
+            // Special characters
             ' ': [
                 [0,0,0,0,0],
                 [0,0,0,0,0],
@@ -116,13 +517,90 @@ class GlyphMatrixUtils {
                 [0,0,0,0,0],
                 [0,0,0,0,0],
                 [0,0,0,0,0]
+            ],
+            '.': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,1,1,0,0],
+                [0,0,0,0,0]
+            ],
+            ',': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,1,1,0,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0]
+            ],
+            '!': [
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            '?': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            ':': [
+                [0,0,0,0,0],
+                [0,1,1,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,1,1,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0]
+            ],
+            '-': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0]
+            ],
+            '+': [
+                [0,0,0,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [1,1,1,1,1],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            '=': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0],
+                [0,0,0,0,0]
             ]
         };
         
-        const startX = Math.floor((size - text.length * charWidth) / 2);
+        // Calculate text width and positioning
+        const textWidth = text.length * charWidth;
+        let startX = Math.floor((size - textWidth) / 2);
         const startY = Math.floor((size - charHeight) / 2);
         
-        for (let i = 0; i < text.length && i * charWidth < size; i++) {
+        // If text is too wide, start from left edge
+        if (startX < 0) startX = 0;
+        
+        for (let i = 0; i < text.length && startX + i * charWidth < size; i++) {
             const char = text[i].toUpperCase();
             const pattern = fontPatterns[char] || fontPatterns[' '];
             
@@ -231,9 +709,44 @@ class GlyphMatrixManager {
             
             if (brightness > 0) {
                 led.classList.add('active');
-                led.style.backgroundColor = '#ffffff';
+                
+                // Calculate brightness as a percentage (0-255 -> 0-100%)
+                const brightnessPercent = Math.round((brightness / 255) * 100);
+                
+                // Use CSS brightness filter and opacity to show different levels
+                const normalizedBrightness = brightness / 255;
+                
+                // Create different visual brightness levels
+                if (brightness >= 200) {
+                    // Very bright - pure white
+                    led.style.backgroundColor = '#ffffff';
+                    led.style.boxShadow = '0 0 4px rgba(255, 255, 255, 0.8)';
+                } else if (brightness >= 150) {
+                    // Bright - light gray with glow
+                    led.style.backgroundColor = '#e0e0e0';
+                    led.style.boxShadow = '0 0 2px rgba(255, 255, 255, 0.6)';
+                } else if (brightness >= 100) {
+                    // Medium - gray
+                    led.style.backgroundColor = '#a0a0a0';
+                    led.style.boxShadow = '0 0 1px rgba(255, 255, 255, 0.4)';
+                } else if (brightness >= 50) {
+                    // Dim - dark gray
+                    led.style.backgroundColor = '#606060';
+                    led.style.boxShadow = 'none';
+                } else {
+                    // Very dim - very dark gray
+                    led.style.backgroundColor = '#303030';
+                    led.style.boxShadow = 'none';
+                }
+                
                 led.style.opacity = '1';
                 led.style.border = 'none';
+                
+                // Get position info for tooltip
+                const row = Math.floor(i / 25);
+                const col = i % 25;
+                led.title = `LED [${row},${col}] - Brightness: ${brightness}/255 (${brightnessPercent}%)`;
+                
                 activeLeds++;
                 totalBrightness += brightness;
             } else {
@@ -241,6 +754,12 @@ class GlyphMatrixManager {
                 led.style.backgroundColor = '#0a0a0a';
                 led.style.opacity = '1';
                 led.style.border = 'none';
+                led.style.boxShadow = 'none';
+                
+                // Get position info for tooltip
+                const row = Math.floor(i / 25);
+                const col = i % 25;
+                led.title = `LED [${row},${col}] - Off`;
             }
         }
         
@@ -269,6 +788,7 @@ class GlyphMatrixObject {
         this.orientation = builder.orientation;
         this.scale = builder.scale;
         this.brightness = builder.brightness;
+        this.reverse = builder.reverse;
     }
     
     getImageSource() { return this.imageSource; }
@@ -289,6 +809,7 @@ GlyphMatrixObject.Builder = class {
         this.orientation = 0;
         this.scale = 100;
         this.brightness = 255;
+        this.reverse = false;
     }
     
     setImageSource(imageSource) {
@@ -323,7 +844,8 @@ GlyphMatrixObject.Builder = class {
     }
     
     setReverse(reverse) {
-        // For compatibility with examples
+        // Sets whether the object should be displayed in reverse/inverted colors
+        this.reverse = reverse;
         return this;
     }
     
@@ -459,7 +981,8 @@ GlyphMatrixFrame.Builder = class {
     }
     
     build(context) {
-        // Context parameter for compatibility, not used in web version
+        // Context parameter for compatibility with Android API
+        // In web version, context is not used but maintained for API compatibility
         return new GlyphMatrixFrame(this);
     }
 };
@@ -565,9 +1088,41 @@ function updateGlyphDisplay() {
         
         if (brightness > 0) {
             led.classList.add('active');
-            led.style.backgroundColor = '#ffffff';
+            
+            // Calculate brightness as a percentage (0-255 -> 0-100%)
+            const brightnessPercent = Math.round((brightness / 255) * 100);
+            
+            // Create different visual brightness levels
+            if (brightness >= 200) {
+                // Very bright - pure white
+                led.style.backgroundColor = '#ffffff';
+                led.style.boxShadow = '0 0 4px rgba(255, 255, 255, 0.8)';
+            } else if (brightness >= 150) {
+                // Bright - light gray with glow
+                led.style.backgroundColor = '#e0e0e0';
+                led.style.boxShadow = '0 0 2px rgba(255, 255, 255, 0.6)';
+            } else if (brightness >= 100) {
+                // Medium - gray
+                led.style.backgroundColor = '#a0a0a0';
+                led.style.boxShadow = '0 0 1px rgba(255, 255, 255, 0.4)';
+            } else if (brightness >= 50) {
+                // Dim - dark gray
+                led.style.backgroundColor = '#606060';
+                led.style.boxShadow = 'none';
+            } else {
+                // Very dim - very dark gray
+                led.style.backgroundColor = '#303030';
+                led.style.boxShadow = 'none';
+            }
+            
             led.style.opacity = '1';
             led.style.border = 'none';
+            
+            // Get position info for tooltip
+            const row = Math.floor(i / 25);
+            const col = i % 25;
+            led.title = `LED [${row},${col}] - Brightness: ${brightness}/255 (${brightnessPercent}%)`;
+            
             activeLeds++;
             totalBrightness += brightness;
         } else {
@@ -575,6 +1130,12 @@ function updateGlyphDisplay() {
             led.style.backgroundColor = '#0a0a0a';
             led.style.opacity = '1';
             led.style.border = 'none';
+            led.style.boxShadow = 'none';
+            
+            // Get position info for tooltip
+            const row = Math.floor(i / 25);
+            const col = i % 25;
+            led.title = `LED [${row},${col}] - Off`;
         }
     }
     

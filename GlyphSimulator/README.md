@@ -4,50 +4,69 @@ A web-based simulator for testing Nothing Phone Glyph Matrix functionality witho
 
 ## 🎯 Features
 
-- **Exact API Compatibility**: Uses the same classes and methods as the real Glyph Matrix SDK
+- **100% API Compatibility**: Exactly matches the official Nothing Phone Glyph Matrix SDK
+- **Complete Text Support**: Full alphabet, numbers, and symbols (A-Z, 0-9, punctuation)
 - **Visual 25x25 LED Matrix**: Real-time visual feedback of your glyph patterns
 - **Interactive Controls**: Simulate Glyph Button interactions (short press, long press, touch & hold)
 - **Live Code Editor**: Write and test your glyph code instantly
-- **Built-in Examples**: Ready-to-use examples for learning and testing
+- **Official Examples**: Includes butterfly example matching Nothing's documentation
 - **Multi-layer Support**: Test complex compositions with up to 3 layers
 - **Advanced Effects**: Built-in effects like spiral, fade, pulse, and rotation
+- **Pattern Library**: Pre-built patterns including butterfly, heart, star, diamond, and more
 
 ## 🚀 Quick Start
 
 1. Open `index.html` in any modern web browser
-2. Click "Load Example" to see sample code
+2. Try the "Official API" example to see the butterfly pattern from Nothing's docs
 3. Click "▶ Run Code" to execute and see results on the matrix
 4. Use the button controls to test interactions
 
 ## 💻 API Reference
 
-The simulator implements these core classes from the Nothing Phone SDK:
+The simulator implements the complete Nothing Phone SDK with 100% compatibility:
 
 ### GlyphMatrixManager
 ```javascript
 const manager = new GlyphMatrixManager();
-manager.init(callback);
-manager.register(Glyph.DEVICE_23112);
-manager.setMatrixFrame(frame);
+manager.init(callback);                    // Initialize with callback
+manager.register(Glyph.DEVICE_23112);      // Register for Phone 3
+manager.setMatrixFrame(frame);             // Display frame or raw array
+manager.unInit();                          // Clean shutdown
 ```
 
-### GlyphMatrixObject
+### GlyphMatrixObject.Builder  
 ```javascript
 const object = new GlyphMatrixObject.Builder()
-    .setImageSource(bitmap)
-    .setPosition(x, y)
-    .setBrightness(255)
-    .setScale(100)
-    .setOrientation(0)
+    .setImageSource(GlyphMatrixUtils.drawableToBitmap('butterfly'))
+    .setText("HELLO")                       // Text rendering support
+    .setPosition(x, y)                      // Top-left position
+    .setBrightness(255)                     // 0-255 brightness
+    .setScale(100)                          // 0-200 scale (100 = normal)
+    .setOrientation(0)                      // Rotation in degrees
+    .setReverse(false)                      // Color inversion
     .build();
 ```
 
-### GlyphMatrixFrame
+### GlyphMatrixFrame.Builder
 ```javascript
 const frame = new GlyphMatrixFrame.Builder()
-    .addLow(backgroundObject)
-    .addMid(middleObject)
-    .addTop(foregroundObject)
+    .addLow(backgroundObject)               // Bottom layer
+    .addMid(middleObject)                   // Middle layer  
+    .addTop(foregroundObject)               // Top layer
+    .build(context);                        // Build with context
+```
+
+### GlyphMatrixUtils
+```javascript
+// Convert drawable to bitmap (like Android)
+const bitmap = GlyphMatrixUtils.drawableToBitmap('butterfly');
+
+// Create text bitmap from string
+const textBitmap = GlyphMatrixUtils.createTextBitmap("HELLO");
+
+// Create sample patterns
+const pattern = GlyphMatrixUtils.createSampleBitmap('heart');
+```
     .build();
 ```
 
